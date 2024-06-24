@@ -5,24 +5,39 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Joke, fetchRandomJoke, fetchJokeByQuery } from '@/services/api/chuckNorris'
+import Spinner from '@/components/ui/spinner'
 
 export default function Home() {
   const [joke, setJoke] = useState<Joke | null>(null)
   const [inputValue, setInputValue] = useState('')
+  const [notFoundValue, setNotFoundValue] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     fetchJoke()
   }, [])
 
   function fetchJoke() {
+    setLoading(true)
     fetchRandomJoke()
       .then(data => setJoke(data))
+      .then(() => setLoading(false))
       .catch(error => console.error('Failed to fetch the joke:', error))
   }
 
   function handleSearch() {
+    setLoading(true)
+
     fetchJokeByQuery(inputValue)
-      .then(data => setJoke(data))
+      .then(data => {
+        if (data) {
+          setJoke(data)
+        } else {
+          setNotFoundValue(inputValue)
+          setJoke(null)
+        }
+      })
+      .then(() => setLoading(false))
       .catch(error => console.error('Failed to fetch the joke:', error))
   }
 
@@ -47,7 +62,16 @@ export default function Home() {
       </div>
       <Card className="shadow-md">
         <CardContent className="flex h-32 items-center">
-          <p>{joke?.value}</p>
+          {loading ? (
+            <Spinner />
+          ) : joke ? (
+            joke?.value
+          ) : (
+            <p className="text-red-500">
+              {`There's obviously a Chuck Norris fact involving ${notFoundValue}, but it's too cool to be displayed here
+              (we couldn't find one, sorry!)`}
+            </p>
+          )}
         </CardContent>
       </Card>
       <Button className="w-56 h-16 shadow-sm" variant="outline" onClick={fetchJoke}>
