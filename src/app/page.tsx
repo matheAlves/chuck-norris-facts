@@ -29,13 +29,15 @@ export default function Home() {
       .then(data => {
         if (data) {
           setJoke(data)
-        } else {
-          setNotFoundValue(inputValue)
-          setJoke(null)
         }
       })
       .then(() => setLoading(false))
-      .catch(error => console.error('Failed to fetch the joke:', error))
+      .catch(error => {
+        setNotFoundValue(inputValue)
+        setJoke(null)
+        setLoading(false)
+        console.error('Failed to fetch the joke:', error)
+      })
   }
 
   return (
