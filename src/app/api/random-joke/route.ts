@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Joke } from '../../../services/api/chuckNorris'
+import { revalidatePath } from 'next/cache'
 
 const fetchRandomJoke = async (): Promise<Joke> => {
   // This is a hack to prevent the browser from caching the response
@@ -18,6 +19,8 @@ const fetchRandomJoke = async (): Promise<Joke> => {
 export async function GET(req: NextRequest) {
   try {
     const joke = await fetchRandomJoke()
+    const path = '/api/random-joke'
+    revalidatePath(path)
     return NextResponse.json(joke)
   } catch (error) {
     console.error('Failed to fetch the joke:', error)
