@@ -36,7 +36,6 @@ const fetchJokeByQuery = async (query: string): Promise<Joke | null> => {
       throw new Error('Failed to fetch joke by query')
     }
     const data = await response.json()
-    console.log('data at 39', data)
     return data
   } catch (err) {
     if (err instanceof Error) {
