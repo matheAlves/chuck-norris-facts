@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Button, Input, Spinner, WhatsappShareButton } from '@/components/ui'
 import { Joke, fetchRandomJoke, fetchJokeByQuery } from '@/services/api/chuckNorris'
-import Spinner from '@/components/ui/spinner'
 
 export default function Home() {
   const [joke, setJoke] = useState<Joke | null>(null)
@@ -75,6 +73,7 @@ export default function Home() {
           )}
         </CardContent>
       </Card>
+      <WhatsappShareButton text={joke?.value || ''} />
       <Button className="w-56 h-16 shadow-sm bg-slate-400 hover:bg-zinc-700" onClick={fetchJoke}>
         Next!
       </Button>
