@@ -41,7 +41,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col min-h-screen items-center justify-evenly content-center sm:p-52 bg-slate-100">
+    <main className="flex flex-col min-h-screen items-center justify-evenly py-36 content-center  sm:p-52 bg-slate-100">
       <header className="text-4xl font-bold">Chuck Norris Facts</header>
       <div className="flex w-full max-w-sm items-center space-x-2">
         <div className="flex flex-row w-full justify-center items-center">
@@ -61,8 +61,8 @@ export default function Home() {
           </Button>
         </div>
       </div>
-      <Card className="shadow-md">
-        <CardContent className="flex sm:h-32 w-48 sm:w-auto items-center justify-center">
+      <Card className="shadow-md w-80 sm:w-auto">
+        <CardContent className="flex w-auto items-center justify-center text-center">
           {loading ? (
             <Spinner />
           ) : joke ? (
