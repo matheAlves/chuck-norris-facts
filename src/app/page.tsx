@@ -27,7 +27,6 @@ export default function Home() {
 
   function handleSearch() {
     setLoading(true)
-
     fetchJokeByQuery(inputValue)
       .then(data => {
         if (data) {
@@ -42,26 +41,28 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col min-h-screen items-center justify-evenly content-center p-52 bg-slate-100">
+    <main className="flex flex-col min-h-screen items-center justify-evenly content-center sm:p-52 bg-slate-100">
       <header className="text-4xl font-bold">Chuck Norris Facts</header>
       <div className="flex w-full max-w-sm items-center space-x-2">
-        <Input
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              console.log('Enter key pressed')
-              handleSearch()
-            }
-          }}
-          type="email"
-          placeholder="Search by text"
-          onChange={e => setInputValue(e.target.value)}
-        />
-        <Button type="submit" onClick={handleSearch}>
-          Search!
-        </Button>
+        <div className="flex flex-row w-full justify-center items-center">
+          <Input
+            className="w-56"
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                handleSearch()
+              }
+            }}
+            type="email"
+            placeholder="Search by text"
+            onChange={e => setInputValue(e.target.value)}
+          />
+          <Button type="submit" onClick={handleSearch} className="ml-5 bg-slate-400 hover:bg-zinc-700">
+            Search!
+          </Button>
+        </div>
       </div>
       <Card className="shadow-md">
-        <CardContent className="flex h-32 items-center">
+        <CardContent className="flex sm:h-32 w-48 sm:w-auto items-center justify-center">
           {loading ? (
             <Spinner />
           ) : joke ? (
@@ -69,12 +70,12 @@ export default function Home() {
           ) : (
             <p className="text-red-500">
               {`There's obviously a Chuck Norris fact involving ${notFoundValue}, but it's too cool to be displayed here
-              (we couldn't find one, sorry!)`}
+              (truth is we couldn't find one, sorry!)`}
             </p>
           )}
         </CardContent>
       </Card>
-      <Button className="w-56 h-16 shadow-sm" variant="outline" onClick={fetchJoke}>
+      <Button className="w-56 h-16 shadow-sm bg-slate-400 hover:bg-zinc-700" onClick={fetchJoke}>
         Next!
       </Button>
     </main>
