@@ -41,12 +41,11 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col min-h-screen items-center justify-evenly py-36 content-center  sm:p-52 bg-slate-100">
-      <header className="text-4xl font-bold">Chuck Norris Facts</header>
-      <div className="flex w-full max-w-sm items-center space-x-2">
-        <div className="flex flex-row w-full justify-center items-center">
+    <main className="flex flex-col min-h-screen items-center justify-center bg-slate-100">
+      <header className="text-4xl font-bold absolute top-10">Chuck Norris Facts</header>
+      <div className="self-center flex flex-col items-center gap-9">
+        <div className="flex flex-row justify-center items-center w-full">
           <Input
-            className="w-56"
             onKeyDown={e => {
               if (e.key === 'Enter') {
                 handleSearch()
@@ -60,25 +59,26 @@ export default function Home() {
             Search!
           </Button>
         </div>
-      </div>
-      <Card className="shadow-md w-80 sm:w-auto">
-        <CardContent className="flex w-auto items-center justify-center text-center">
-          {loading ? (
-            <Spinner />
-          ) : joke ? (
-            joke?.value
-          ) : (
-            <p className="text-red-500">
-              {`There's obviously a Chuck Norris fact involving ${notFoundValue}, but it's too cool to be displayed here
+
+        <Card className="shadow-md w-80 sm:w-auto self-center">
+          <CardContent className="flex w-auto  h-80 overflow-x-auto sm:w-80 items-center justify-center text-center">
+            {loading ? (
+              <Spinner />
+            ) : joke ? (
+              joke?.value
+            ) : (
+              <p className="text-red-500">
+                {`There's obviously a Chuck Norris fact involving ${notFoundValue}, but it's too cool to be displayed here
               (truth is we couldn't find one, sorry!)`}
-            </p>
-          )}
-        </CardContent>
-      </Card>
-      <WhatsappShareButton text={joke?.value || ''} />
-      <Button className="w-56 h-16 shadow-sm bg-slate-400 hover:bg-zinc-700" onClick={fetchJoke}>
-        Next!
-      </Button>
+              </p>
+            )}
+          </CardContent>
+        </Card>
+        <Button className="w-56 h-16 shadow-sm bg-slate-400 hover:bg-zinc-700 " onClick={fetchJoke}>
+          Next!
+        </Button>
+        <WhatsappShareButton text={joke?.value || ''} />
+      </div>
     </main>
   )
 }
